@@ -23,66 +23,76 @@ is an object-oriented programming language.
 
 ## Introduction
 
-Lorem ipsum dolor sit amet. Ut velit fugit et porro voluptas quia sequi quo
-libero autem qui similique placeat eum velit autem aut repellendus quia. Et
-Quis magni ut fugit obcaecati in expedita fugiat est iste rerum qui ipsam
-ducimus et quaerat maxime sit eaque minus. Est molestias voluptatem et nostrum
-recusandae qui incidunt Quis 33 ipsum perferendis sed similique architecto.
-
-Sed ipsam quidem eum minima maxime et commodi dolores quo ipsa maxime aut vero
-consectetur id velit dignissimos. Et fuga porro eum galisum suscipit qui esse
-blanditiis sed explicabo officia aut mollitia error est illo earum et sint
-laborum! Sit aspernatur accusantium aut doloribus saepe est magni quod aut
-molestiae voluptatem.
-
-Vel inventore minus aut ullam maiores sit internos cupiditate eos odit totam
-eos molestiae galisum. Et ipsum provident ut nihil dicta et dicta doloremque
-eum magnam ullam ut quibusdam quaerat.
+A one-to-many relationship refers to a relationship between two or more objects. One object can be associated with multiple objects of another type. This relationship is represented using association, aggregation, or composition. In this lesson we will talk about association, aggregation, and composition and how we can use them to create one-to-many relationships. In this lesson we will use the example of teacher and students.
 
 ***
 
-## Lesson Section
+## Association
 
-Lorem ipsum dolor sit amet. Ut velit fugit et porro voluptas quia sequi quo
-libero autem qui similique placeat eum velit autem aut repellendus quia. Et
-Quis magni ut fugit obcaecati in expedita fugiat est iste rerum qui ipsam
-ducimus et quaerat maxime sit eaque minus. Est molestias voluptatem et nostrum
-recusandae qui incidunt Quis 33 ipsum perferendis sed similique architecto.
+Association is a weak relationship between otherwise unrelated objects, where the objects have their own lifetime and there is no parent object. For example, a teacher can be associated with multiple students, and one student can have multiple teachers
 
 ```py
-# python code block
-print("statement")
-# => statement
+class Teacher:
+
+  def __init__(self, list_of_students):
+    self.students = list_of_students
+
+
+class Student
+  def __init__(self, name):
+    self.name = name
+
 ```
 
-```js
-// javascript code block
-console.log("use these for comparisons between languages.")
-// => use these for comparisons between languages.
+In this example a Student can have multiple teachers
+
+## Aggregation
+
+Aggregation is a form of association in which each object has its own life cycle, but there exists an ownership as well. This is typically a parent/child relationship,
+
+```py
+class Car:
+    def __init__(self, engine):
+        self.engine = engine
+
+class Engine:
+    def __init__(self, cylinders, fuelType):
+        self.cylinders = cylinders
+        self.fuelType = fuelType
+
 ```
 
-```console
-echo "bash/zshell statement"
-# => bash/zshell statement
+We can create an engine object and pass it into the Car when we initialize it.
+
+```py
+four_cylinder_engine = Engine(4, 'regular')
+acura_tlx = Car(engine)
 ```
 
-<details>
-  <summary>
-    <em>Check for understanding text goes here! <code>Code statements go here.</code></em>
-  </summary>
+If the car is deleted the engine object won't be deleted.
 
-  <h3>Answer.</h3>
-  <p>Elaboration on answer.</p>
-</details>
-<br/>
+## Composition
+
+Composition is a "part-of" relationship, where both entities are interdependent on each other. For instance, an CPU is a part of a computer, and both are dependent on each other
+
+```py
+class CPU:
+  def __init__(self, cpu_type):
+    self.cpu_type = cpu_type
+
+class Computer:
+  def __init(self, cpu_type):
+    self.CPU = new CPU(cpu_type)
+
+```
+
+This example represents a one-to-many relationship between computer and CPU because a computer can have many different types of CPUs. This is composition because the CPU is created within the Computer class.
 
 ***
 
 ## Conclusion
 
-Conclusion summary paragraph. Include common misconceptions and what students
-will be able to do moving forward.
-
+In OOP we can represent One-
 ***
 
 ## Resources
