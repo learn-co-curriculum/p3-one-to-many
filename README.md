@@ -57,8 +57,6 @@ class Shopper:
         self.name = name
         self.grocery_items = []
 
-    def add_grocery_item(self, item):
-        self.grocery_items.append(item)
 
 ```
 
@@ -71,8 +69,8 @@ item1 = GroceryItem("apple", 1)
 item2 = GroceryItem("orange", 2)
 
 # Add the grocery items to the shopper's list
-shopper.add_grocery_item(item1)
-shopper.add_grocery_item(item2)
+shopper.grocery_items.append(item1)
+shopper.grocery_items.append(item2)
 
 # Print the shopper's grocery list
 for item in shopper.grocery_items:
@@ -113,6 +111,8 @@ class Student:
 class Teacher:
     def __init__(self, name):
         self.name = name
+        # students is protected because it is not a part of the constructor
+
         self._students = []
 
     @property
