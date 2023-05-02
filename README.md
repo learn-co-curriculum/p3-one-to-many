@@ -23,62 +23,39 @@ is an object-oriented programming language.
 
 ## Introduction
 
-A one-to-many relationship refers to a relationship between two or more objects. One object can be associated with multiple objects of another type. This relationship is represented using association, aggregation, or composition. In this lesson we will talk about association, aggregation, and composition and how we can use them to create one-to-many relationships. In this lesson we will talk about these relationships using examples of real world relationships. One to many relationships are not as common in the real world as many-to-many relationships.
-
+A one-to-many relationship refers to a relationship between two or more objects. One object can be associated with multiple objects of another type. This relationship is represented using association, aggregation, or composition. In this lesson we will talk about association, aggregation, and composition and how we can use them to create one-to-many relationships. We will talk about these relationships using examples of real world relationships. One to many relationships are more common in the real world than many-to-many relationships.
 ***
 
 ## Association
 
 Association is a weak relationship between otherwise unrelated objects, where the objects have their own lifetime and there is no parent object.
 
-Lets look at an example of a one way one-to-many relationship.
+### One way one-to-many relationship
 
-The example will use a Shopper and GroceryItem class. The Shopper class will have a list attribute to store the related GroceryItem objects. Here's an example implementation:
+Lets look at an example of a one way one-to-many relationship.
+The example will use a `Shopper` and `GroceryItem` class. The `Shopper` class will have a list attribute to store the related `GroceryItem` objects.
+
+In this case it does not make sense for the `GroceryItem` to know about the `Shopper`.
+
+Here's an example implementation:
 
 ```py
 class GroceryItem:
     def __init__(self, name, price):
-        self._name = name
-        self._price = price
-
-    @property
-    def name(self):
-        return self._name
-
-    @name.setter
-    def name(self, value):
-        self._name = value
-
-    @property
-    def price(self):
-        return self._price
-
-    @price.setter
-    def price(self, value):
-        self._price = value
+        self.name = name
+        self.price = price
 
 class Shopper:
     def __init__(self, name):
-        self._name = name
-        self._grocery_items = []
-
-    @property
-    def name(self):
-        return self._name
-
-    @name.setter
-    def name(self, value):
-        self._name = value
-
-    @property
-    def grocery_items(self):
-        return self._grocery_items
+        self.name = name
+        self.grocery_items = []
 
     def add_grocery_item(self, item):
-        self._grocery_items.append(item)
+        self.grocery_items.append(item)
+
 ```
 
-In this example, the Shopper class has a `grocery_items` attribute, which is a list of `GroceryItem` objects. The `add_grocery_item` method allows adding an item to the shopper's grocery list, establishing a one-to-many relationship between `Shopper` and `GroceryItem`. Here's how you can use these classes:
+In this example, the `Shopper` class has a `grocery_items` attribute, which is a list of `GroceryItem` objects. The `add_grocery_item` method allows adding an item to the shopper's grocery list, establishing a one-to-many relationship between `Shopper` and `GroceryItem`. Here's how you can use these classes:
 
 ```py
 # Create a shopper and some grocery items
@@ -93,43 +70,28 @@ shopper.add_grocery_item(item2)
 # Print the shopper's grocery list
 for item in shopper.grocery_items:
     print(item.name, item.price)
+
+# => apple 1
+# => orange 2
 ```
+
+### Two way one-to-many relationship
 
 Lets look at an example of a two way one-to-many relationship. In this example we will use a `Teacher` and
 `Student` class.
-The reason we want to do this is because the `Student` class may need to know who the `Teacher` is.
+The reason we want to make this a two way relationship is because the `Student` class may need to know who the `Teacher` is.
 In the previous example the `GroceryItem` has no reason to know who the shopper associated with it is.
 
-For this example we will also add type checks to the setters and methods and return `TypeError` if
-the types are incorrect. In the setters for the attributes we can use `isinstance` to make sure the user is not
-passing in a string when the attribute expects an integer or certain object.  
+For this example we will also add type checks to the setters and methods and raise a `TypeError` if
+the types are incorrect. In the setters for the attributes we can use `isinstance` to make sure the user is not passing in a string or number when the attribute expects an object.  
 
 ```py
 class Student:
     def __init__(self, name, age):
         self.name = name
         self.age = age
+        # teacher is protected because it is not a part of the constructor
         self._teacher = None
-
-    @property
-    def name(self):
-        return self._name
-
-    @name.setter
-    def name(self, value):
-        if not isinstance(value, str):
-            raise TypeError("Name must be a string")
-        self._name = value
-
-    @property
-    def age(self):
-        return self._age
-
-    @age.setter
-    def age(self, value):
-        if not isinstance(value, int):
-            raise TypeError("Age must be an integer")
-        self._age = value
 
     @property
     def teacher(self):
@@ -147,16 +109,6 @@ class Teacher:
         self._students = []
 
     @property
-    def name(self):
-        return self._name
-
-    @name.setter
-    def name(self, value):
-        if not isinstance(value, str):
-            raise TypeError("Name must be a string")
-        self._name = value
-
-    @property
     def students(self):
         return self._students
 
@@ -168,12 +120,13 @@ class Teacher:
 ```
 
 In this example a teacher can have multiple students and a student needs to know who their teacher is.
-The difference in this example is that when we add the student to the teacher we also set the students teacher to
-the teacher object using `self`.
+The difference in this example is that when we add the student to the teacher in the `add_student` method we also set the students teacher to the teacher object using `self`.
+
+***
 
 ## Aggregation
 
-Aggregation is a form of association in which each object has its own life cycle, but there exists an ownership as well. This is typically a parent/child relationship. We will use a `Car` and `Engine` class.
+Aggregation is a form of association in which each object has its own life cycle, but there exists an ownership as well. Similarly to object inheritance we can call this a parent child relationship but instead of the attributes the parent contains the instance of a child. We will use a `Car` and `Engine` class for this example.
 
 ```py
 class Car:
@@ -186,20 +139,21 @@ class Engine:
         self.fuelType = fuelType
 ```
 
-The engine class does not need to know about the car.
-
-We can create an engine object and pass it into the Car when we initialize it.
+The `Car` class takes in an engine object instead of creating the `Engine` object. This allows
+the `Engine` object to have its own lifecycle.
 
 ```py
 four_cylinder_engine = Engine(4, 'regular')
 acura_tlx = Car(engine)
 ```
 
-If the car is deleted the engine object won't be deleted.
+If the `Car` is deleted the engine object won't be deleted. We can use the engine object in a different `Car` object.
+
+***
 
 ## Composition
 
-Composition is a "part-of" relationship, where both entities are interdependent on each other. For instance, an CPU is a part of a computer, and both are dependent on each other
+Composition is a "part-of" relationship, where both entities are interdependent on each other. For instance, a `CPU` is a part of a `Computer`, and both are dependent on each other
 
 ```py
 
@@ -214,7 +168,6 @@ class Computer:
 ```
 
 This example represents a one-to-many relationship between computer and CPU because a computer can have many different types of CPUs. This is composition because the CPU is created within the Computer class.
-
 ***
 
 ## Conclusion
