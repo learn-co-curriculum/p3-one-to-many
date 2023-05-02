@@ -23,7 +23,14 @@ is an object-oriented programming language.
 
 ## Introduction
 
-A one-to-many relationship refers to a relationship between two or more objects. One object can be associated with multiple objects of another type. This relationship is represented using association, aggregation, or composition. In this lesson we will talk about association, aggregation, and composition and how we can use them to create one-to-many relationships. We will talk about these relationships using examples of real world relationships. One to many relationships are more common in the real world than many-to-many relationships.
+In object-oriented programming, a one-to-many relationship refers to a relationship between two or more objects in which one object can be associated with multiple objects of another type. For instance, a teacher can have multiple students in a class, or a university can have many departments.
+
+
+To represent this relationship, we can use various techniques such as association, aggregation, or composition. Association refers to a relationship where two objects are related, but not in a way that one object owns the other. For example, a library has an association with books as it stores them, but it doesn't own them. Aggregation is a relationship where one object is a part of another object, and the first object can exist independently. For example, a car can have many wheels, but each wheel can also be used in other cars. Composition is a relationship where one object is made up of another object, and the first object cannot exist without the second object. For example, a house is composed of rooms, and each room is part of the house.
+
+
+In this lesson, we will discuss how we can use these techniques to create one-to-many relationships.
+
 ***
 
 ## Association
