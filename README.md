@@ -88,7 +88,8 @@ The reason we want to make this a two way relationship is because the `Student` 
 In the previous example the `GroceryItem` has no reason to know who the shopper associated with it is.
 
 For this example we will also add type checks to the setters and methods and raise a `TypeError` if
-the types are incorrect. In the setters for the attributes we can use `isinstance` to make sure the user is not passing in a string or number when the attribute expects an object.  
+the types are incorrect. In the setters for the attributes we can use `isinstance` to make sure the user is not passing in a string or number when the attribute expects an object.
+A property decorator in Python is a built-in decorator that allows you to give special functionality to certain methods in a class, making them act as getters, setters. In this code example, the @property decorator is used to define a getter and setter method for the teacher attribute. We can use these methods to validate values. In `Student` class we validate that the teacher setter only accepts a `Teacher` object.
 
 ```py
 class Student:
@@ -112,7 +113,6 @@ class Teacher:
     def __init__(self, name):
         self.name = name
         # students is protected because it is not a part of the constructor
-
         self._students = []
 
     @property
