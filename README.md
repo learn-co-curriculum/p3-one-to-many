@@ -112,18 +112,22 @@ string or number when the attribute expects an object.
 
 A property decorator in Python is a built-in decorator that allows you to give
 special functionality to certain methods in a class, making them act as getters,
-setters. In this code example, the @property decorator is used to define a
+setters. In this code example, the `@property` decorator is used to define a
 getter and setter method for the teacher attribute. We can use these methods to
 validate values. In `Student` class we validate that the teacher setter only
 accepts a `Teacher` object.
 
 ```py
 class Student:
+
+    all = []
+
     def __init__(self, name, age):
         self.name = name
         self.age = age
         # teacher is protected because it is not a part of the constructor
         self._teacher = None
+        Student.all.append(self)
 
     @property
     def teacher(self):
@@ -138,24 +142,86 @@ class Student:
 class Teacher:
     def __init__(self, name):
         self.name = name
-        # students is protected because it is not a part of the constructor
-        self._students = []
 
-    @property
     def students(self):
-        return self._students
+        return [student for student in Student.all if student.teacher == self]
 
     def add_student(self, student):
         if not isinstance(student, Student):
             raise TypeError("Student must be an instance of Student class")
-        self._students.append(student)
         student.teacher = self
 ```
 
 In this example a teacher can have multiple students and a student needs to know
-who their teacher is. The difference in this example is that when we add the
-student to the teacher in the `add_student` method we also set the students
-teacher to the teacher object using `self`.
+who their teacher is. The difference in this example is that when we access
+students through their teachers, we are referring back to the student class.
+This is due to a principle called **Single Source of Truth**.
+
+### Single Source of Truth (SSOT)
+
+"Single source of truth" is a way of organizing code in Python so that there is
+only one place where each piece of information or code is defined. This helps
+make the code more consistent and easier to understand and change in the future.
+
+For example, imagine you have a website that uses a certain color scheme. You
+might define the colors in a separate module or file, so that if you ever want
+to change the colors, you only have to change them in that one place. This
+ensures that all parts of the website use the same colors.
+
+Another example might be a game where different characters have different
+abilities. You might define those abilities in a single module or class, so that
+the game is consistent across all characters.
+
+With object relationships, there should be a single source of truth for each
+relationship. In one-way relationships, this is simple: "ones" store their
+"manys" in lists or "manys" store their "ones" as objects. In two-way
+relationships, we need to be a bit more clever. Let's look back at the example
+from above:
+
+```py
+class Student:
+
+    all = []
+
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        self._teacher = None
+        Student.all.append(self)
+
+    # teacher property
+
+class Teacher:
+    def __init__(self, name):
+        self.name = name
+
+    def students(self):
+        return [student for student in Student.all if student.teacher == self]
+
+    def add_student(self, student):
+        if not isinstance(student, Student):
+            raise TypeError("Student must be an instance of Student class")
+        student.teacher = self
+
+```
+
+In order to give teachers access to their students, we _could_ create a list
+attribute in the `Teacher` class to hold onto all of their related `Student`
+objects. However, this would be a second source of truth for the relationship-
+students already know about their teachers.
+
+When we want to access a teacher's students, we can instead reference all of
+the objects of the `Student` class and search for those whose `Teacher` is
+`self`. When adding students, we can use the `add_student` method to ensure
+that the student is of the `Student` class and then maintain the single source
+of truth through the student by setting `student.teacher` to `self`.
+
+> **Note: `add_student` isn't necessary to complete this relationship, but it
+> allows us to modify the relationship with validations from either the
+> `Student` or `Teacher` class while maintaining our SSOT.**
+
+Overall, the idea behind a single source of truth in Python is to make code more
+reliable and easier to maintain by keeping everything organized in one place.
 
 ***
 
