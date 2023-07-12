@@ -14,8 +14,8 @@ accomplish a wide variety of programming tasks.
 - **Object**: the more common name for an instance. The two can usually be used
 interchangeably.
 - **Object-Oriented Programming**: programming that is oriented around data
-(made mobile and changeable in **objects**) rather than functionality. Python
-is an object-oriented programming language.
+(made mobile and changeable in **objects**) rather than functionality. Python is
+an object-oriented programming language.
 - **Function**: a series of steps that create, transform, and move data.
 - **Method**: a function that is defined inside of a class.
 
@@ -28,17 +28,20 @@ relationship between two or more objects in which one object can be associated
 with multiple objects of another type. For instance, a teacher can have multiple
 students in a class, or a university can have many departments.
 
-
 To represent this relationship, we can use various techniques such as
-association, aggregation, or composition. Association refers to a relationship
-where two objects are related, but not in a way that one object owns the other.
-For example, a library has an association with books as it stores them, but it
-doesn't own them. Aggregation is a relationship where one object is a part of
-another object, and the first object can exist independently. For example, a car
-can have many wheels, but each wheel can also be used in other cars. Composition
-is a relationship where one object is made up of another object, and the first
-object cannot exist without the second object. For example, a house is composed
-of rooms, and each room is part of the house.
+association, aggregation, or composition.
+
+Association refers to a relationship where two objects are related, but not in a
+way that one object owns the other. For example, a library has an association
+with books as it stores them, but it doesn't own them.
+
+Aggregation is a relationship where one object is a part of another object, and
+the first object can exist independently. For example, a car can have many
+wheels, but each wheel can also be used in other cars.
+
+Composition is a relationship where one object is made up of another object, and
+the first object cannot exist without the second object. For example, a house is
+composed of rooms, and each room is part of the house.
 
 In this lesson, we will discuss how we can use these techniques to create
 one-to-many relationships.
@@ -52,11 +55,12 @@ the objects have their own lifetime and there is no parent object.
 
 ### One way one-to-many relationship
 
-Lets look at an example of a one way one-to-many relationship.
-The example will use a `Shopper` and `GroceryItem` class. The `Shopper` class
-will have a list attribute to store the related `GroceryItem` objects.
+Lets look at an example of a one way one-to-many relationship. The example will
+use a `Shopper` and `GroceryItem` class. The `Shopper` class will have a list
+attribute to store the related `GroceryItem` objects.
 
-In this case it does not make sense for the `GroceryItem` to know about the `Shopper`.
+In this case it does not make sense for the `GroceryItem` to know about the
+`Shopper`.
 
 Here's an example implementation:
 
@@ -74,10 +78,8 @@ class Shopper:
 
 ```
 
-In this example, the `Shopper` class has a `grocery_items` attribute, which is
-a list of `GroceryItem` objects. The `add_grocery_item` method allows adding an
-item to the shopper's grocery list, establishing a one-to-many relationship
-between `Shopper` and `GroceryItem`. Here's how you can use these classes:
+In this example, the `Shopper` class has a `grocery_items` attribute, which is a
+list of `GroceryItem` objects. Here's how you can use these classes:
 
 ```py
 # Create a shopper and some grocery items
@@ -210,11 +212,11 @@ attribute in the `Teacher` class to hold onto all of their related `Student`
 objects. However, this would be a second source of truth for the relationship-
 students already know about their teachers.
 
-When we want to access a teacher's students, we can instead reference all of
-the objects of the `Student` class and search for those whose `Teacher` is
-`self`. When adding students, we can use the `add_student` method to ensure
-that the student is of the `Student` class and then maintain the single source
-of truth through the student by setting `student.teacher` to `self`.
+When we want to access a teacher's students, we can instead reference all of the
+objects of the `Student` class and search for those whose `Teacher` is `self`.
+When adding students, we can use the `add_student` method to ensure that the
+student is of the `Student` class and then maintain the single source of truth
+through the student by setting `student.teacher` to `self`.
 
 > **Note: `add_student` isn't necessary to complete this relationship, but it
 > allows us to modify the relationship with validations from either the
