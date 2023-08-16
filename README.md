@@ -5,21 +5,21 @@
 - Describe one-to-many relationships.
 - Explain why one-to-many relationships are important.
 
-***
+---
 
 ## Key Vocab
 
 - **Class**: a bundle of data and functionality. Can be copied and modified to
-accomplish a wide variety of programming tasks.
+  accomplish a wide variety of programming tasks.
 - **Object**: the more common name for an instance. The two can usually be used
-interchangeably.
+  interchangeably.
 - **Object-Oriented Programming**: programming that is oriented around data
-(made mobile and changeable in **objects**) rather than functionality. Python is
-an object-oriented programming language.
+  (made mobile and changeable in **objects**) rather than functionality. Python
+  is an object-oriented programming language.
 - **Function**: a series of steps that create, transform, and move data.
 - **Method**: a function that is defined inside of a class.
 
-***
+---
 
 ## Introduction
 
@@ -46,7 +46,7 @@ composed of rooms, and each room is part of the house.
 In this lesson, we will discuss how we can use these techniques to create
 one-to-many relationships.
 
-***
+---
 
 ## Association
 
@@ -225,7 +225,7 @@ through the student by setting `student.teacher` to `self`.
 Overall, the idea behind a single source of truth in Python is to make code more
 reliable and easier to maintain by keeping everything organized in one place.
 
-***
+---
 
 ## Aggregation
 
@@ -251,13 +251,13 @@ object. This allows the `Engine` object to have its own lifecycle.
 
 ```py
 four_cylinder_engine = Engine(4, 'regular')
-acura_tlx = Car(engine)
+acura_tlx = Car(four_cylinder_engine)
 ```
 
 If the `Car` is deleted the engine object won't be deleted. We can use the
 engine object in a different `Car` object.
 
-***
+---
 
 ## Composition
 
@@ -280,7 +280,8 @@ class Computer:
 This example represents a one-to-many relationship between computer and CPU
 because a computer can have many different types of CPUs. This is composition
 because the CPU is created within the `Computer` class.
-***
+
+---
 
 ## Conclusion
 
@@ -311,7 +312,7 @@ structures. By utilizing these relationships, we can accurately model the
 relationships between real-world entities, create more flexible and adaptable
 systems, and build more efficient software applications.
 
-***
+---
 
 ## Resources
 
